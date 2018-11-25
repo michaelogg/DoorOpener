@@ -1,55 +1,78 @@
-<!-- Headings -->
-# Heading1
-## Heading2
-### Heading3
+**Copyright (c) 2016, Michael Ogg**
+# DoorOpener
+## Table of Contents
+* [Abstract](#Abstract)
+* [Basic Methodology](#Basic Methodology)
+* [Components](#Components)
+* [Installation](#Installation)
+* [Usage](#Usage)
 
-*ITALICS* ya
+## Abstract
+This file is part of DoorOpener. DoorOpener is free software: you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
 
-_more italics_
+DoorOpener is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
 
-__bold__
+You should have received a copy of the GNU General Public License
+along with DoorOpener. If not, see <http://www.gnu.org/licenses/>.
 
-**More bolding**
+ogg.michael@gmail.com
 
-__bold__
+http://michaelogg.com
+## Basic Methodology
+This file is part of DoorOpener. DoorOpener is free software: you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
 
-___
----
-***
+DoorOpener is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
 
-> This is a blockquote
+You should have received a copy of the GNU General Public License
+along with DoorOpener. If not, see <http://www.gnu.org/licenses/>.
+## Components
+This file is part of DoorOpener. DoorOpener is free software: you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
 
-<!-- Links -->s
-[YouTube Markdown Tutorial](https://www.youtube.com/watch?v=HUBNt18RFbo "Click to open")
+DoorOpener is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
 
-<!-- UL (Unordered Lists) -->
-* Item 1
-* Item 2
-  * Nested item
+You should have received a copy of the GNU General Public License
+along with DoorOpener. If not, see <http://www.gnu.org/licenses/>.
+## Installation
+This file is part of DoorOpener. DoorOpener is free software: you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
 
-<!-- OL  -->
-1. 1 item
-2. 2 Item
-3. 3 item
+DoorOpener is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
 
-<!-- Inline code block -->
-`<p> This is a paragraph </p>`
+You should have received a copy of the GNU General Public License
+along with DoorOpener. If not, see <http://www.gnu.org/licenses/>.
+## Usage
+This file is part of DoorOpener. DoorOpener is free software: you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
 
+DoorOpener is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
 
-<!--Github Markdown -->
-<!-- Code blocks -->
-
-```python
-  def add(num1, num2):
-    return num1 + num2
-```
-
-<!-- Tables -->
-| Name     | Email               |
-|--------- | ------------------- |
-| Brandon  | branduong@gmail.com |
-
-<!-- Task Lists-->
-* [x] Task 1
-* [x] Task 2
-* [ ] Task 3
+You should have received a copy of the GNU General Public License
+along with DoorOpener. If not, see <http://www.gnu.org/licenses/>.
