@@ -2,7 +2,7 @@
 # DoorOpener
 ## Table of Contents
 * [Abstract](#Abstract)
-* [Basic Methodology](#Basic Methodology)
+* [Basic Methodology](#Basic-Methodology)
 * [Components](#Components)
 * [Installation](#Installation)
 * [Usage](#Usage)
