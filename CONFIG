@@ -1,0 +1,15 @@
+# config file for door operator
+
+DEBUG		True			# debug flag, True/False
+
+rfidReader	/dev/ttyUSB0 /dev/ttyUSB1 
+strikeRelay	/dev/ttyUSB2 1 4	# relay 1, hold 4 sec
+doorRelay	/dev/ttyUSB2 2 1	# relay 2, hold 1 sec
+openDelay	1.5			# time delay for door to open
+contactSensor	/dev/input/mouse0 9 0 0	# close [9,0,0], open [8,0,0]
+# contactSensor	/dev/hidraw0 1 0 0	# close [1,0,0], open [0,0,0] AB: Is this line no longer used?
+
+rfidDB		rfid.db
+
+vera		http://192.168.1.13:3480
+doorId		16
