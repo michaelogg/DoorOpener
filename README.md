@@ -30,14 +30,17 @@ http://michaelogg.com
 ## Components
 * `Vera` : Z-Wave hub that connects the contact closures and switches.
 * `Raspberry Pi` : Main controller that connects to Vera and all other components via USB.
-* `RFID Reader` : Device used to read RFID tags
+* `RFID Reader` x2 : Device used to read RFID tags
 * `Z-Wave Compatible Door Strike Relay` : Remote switch used to open or close the door latch.
 * `Z-Wave Compatible Door Open Relay` : Same device as the strike relay but used to turn the door lock on or off.
-* `Push Plates` : In this project, two pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height.
+* `Z-Wave Compatible Contact Closure` : a relay that allows the door to be opened and close via Z-wave.
+* `Push Plates` x4 : In this project, four pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height both inside and outside the house.
+
 
 ## Installation
 
-***WHAT THE USER NEEDS TO CHANGE*** 
+***WHAT THE USER NEEDS TO CHANGE WITHIN THE CODE*** 
+
 -> Vera IP / other Z-Wave Hub
 -> RFID Keys
 -> USB / device labelling (depending on how the user wires it)
