@@ -36,6 +36,12 @@ http://michaelogg.com
 * `Push Plates` : In this project, two pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height.
 
 ## Installation
+
+***WHAT THE USER NEEDS TO CHANGE*** 
+-> Vera IP / other Z-Wave Hub
+-> RFID Keys
+-> USB / device labelling (depending on how the user wires it)
+
 The installation process is fairly simple and straight forward:
 
 When Pi boots, push button and system is initialized.
