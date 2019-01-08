@@ -18,7 +18,16 @@ We hope that for whatever reason, whether it be as an electronic hobbyist or as 
 
 
 ## Basic Methodology
-* Brief description of method of operation
+DoorOpener relies on two main controllers: the Raspberry Pi, which controls the majority of the project, and the VeraLite IoT controller, which controls the door locker and the Z-wave relay. 
+
+The RFID tags control if the door is locked or unlocked (based on commands sent from the Pi to the Vera. Since there exists a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
+
+The pushplates activate the door opening (via door latch, door strike, and door motor).The door closes automatically after a set period of time (declared in the CONFIG file). In addition to the pushplates, there is a Z-wave relay which can open the door through a Z-wave app (controlled by a device such as an iPhone or Android).
+
+The Pi communicates with the Vera via URL commands (based on API given from Vera) sent via WiFi. This allows the Pi to control the door locker and is the middleman between the Z-wave relay and the Vera itself.
+
+The Pi itself is controlled through threaded python files, which means all the sensors are running at once.
+
 
 ## Components
 * `Raspberry Pi` : Main controller that connects to Vera and all other components via USB.
