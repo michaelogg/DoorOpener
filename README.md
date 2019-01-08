@@ -10,17 +10,17 @@
 
 ## Abstract
 
-This Automatic Door Opener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented and is being managed by the Ryerson Chapter of Tetra. This door opener assumes the user has limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, an Internet of Things (Z-wave) Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
+DoorOpener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented and is being managed by the Ryerson Chapter of Tetra. DoorOpener assumes the user has limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, an Internet of Things (Z-wave) Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
 
 This project assumes you have a basic understanding of the following concepts: electrical work, Raspberry Pi , Internet of Things controllers, and Python. The files are designed so that you can copy and paste this solution almost directly with only minor changes to the config file, providing the hardware is laid out in the same manner. 
 
-We hope that for whatever reason, whether it be as an electronic hobbyist or as someone working in accessibility services, you can make use of Dr. Ogg’s solution. If you’d like to see a video of the Automatic Door Opener, please click here: https://www.youtube.com/watch?v=-B-Js19Npv0
+We hope that for whatever reason, whether it be as an electronic hobbyist or as someone working in accessibility services, you can make use of Dr. Ogg’s solution. If you’d like to see a video of the DoorOpener, please click here: https://www.youtube.com/watch?v=-B-Js19Npv0
 
 
 ## Basic Methodology
-DoorOpener relies on two main controllers: the Raspberry Pi, which controls the majority of the project, and the VeraLite IoT controller, which controls the door locker and the Z-wave relay. 
+DoorOpener relies on two main controllers: the Raspberry Pi, which controls the majority of the project, and the Vera Mi Casa Verde controller, which controls the door locker and the Z-wave relay. 
 
-The RFID tags control if the door is locked or unlocked (based on commands sent from the Pi to the Vera. Since there exists a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
+The RFID tag readers control if the door is locked or unlocked (based on commands sent from the Pi to the Vera). Since there exists a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
 
 The pushplates activate the door opening (via door latch, door strike, and door motor).The door closes automatically after a set period of time (declared in the CONFIG file). In addition to the pushplates, there is a Z-wave relay which can open the door through a Z-wave app (controlled by a device such as an iPhone or Android).
 
@@ -30,11 +30,11 @@ The Pi itself is controlled through threaded python files, which means all the s
 
 
 ## Components
-* `Raspberry Pi` : Main controller that connects to Vera and all other components via USB.
+* `Raspberry Pi 3 Model B` : Main controller that connects to Vera and all other components via USB.
 * `RFID Reader` x2 : Device used to read RFID tags
 * `Door Strike Relay` : Remote switch used to open or close the door latch. (Contained in relay box)
 * `Door Open Relay` : Same device as the strike relay but used to turn the door lock on or off. (Contained in relay box)
-* `Vera` : Z-Wave hub that connects the contact closures and switches.
+* `Vera Mi Casa Verde` : Z-Wave hub that connects the contact closures and switches.
 * `Z-Wave Compatible Contact Closure` : a relay that allows the door to be opened and close via Z-wave.
 * `Push Plates` x4 : In this project, four pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height both inside and outside the house.
 
