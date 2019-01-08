@@ -6,7 +6,7 @@
 * [Components](#Components)
 * [Installation](#Installation)
 * [Usage](#Usage)
-* [Lisence] (#Lisence)
+* [Lisence](#Lisence)
 
 ## Abstract
 
