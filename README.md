@@ -12,7 +12,7 @@
 
 DoorOpener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented and is being managed by the Ryerson Chapter of Tetra. DoorOpener assumes the user has limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, an Internet of Things (Z-wave) Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
 
-This project assumes you have a basic understanding of the following concepts: electrical work, Raspberry Pi , Internet of Things controllers, and Python. The files are designed so that you can copy and paste this solution almost directly with only minor changes to the config file, providing the hardware is laid out in the same manner. 
+This project assumes you have a basic understanding of the following concepts: electrical work, Raspberry Pi , Internet of Things controllers, and Python. The files are designed so that you can copy and paste this solution almost directly with only minor changes to the config file, given that the hardware is laid out in the same manner. 
 
 We hope that for whatever reason, whether it be as an electronic hobbyist or as someone working in accessibility services, you can make use of Dr. Ogg’s solution. If you’d like to see a video of the DoorOpener, please click here: https://www.youtube.com/watch?v=-B-Js19Npv0
 
@@ -47,42 +47,54 @@ The Pi itself is controlled through threaded python files, which means all the s
 
 ## Installation
 
-The Door Opener project is intended to be run on any Raspberry PI (with a minimum of 4 USB ports) and be used with any Vera and Alexa devices thus the following installation guide provided is for that specific intent, although the source code can be implemented on other devices but will not be covered in this installation guide.
+The Door Opener project is intended to perform on any Raspberry PI (with a minimum of 4 USB ports or with the use of a USB hub) and be used with any Vera and Alexa devices. Although the source code can be implemented on other devices, the following installation guide only applies to the aforementioned devices:
 
-Steps:
+1. Go to https://home.getvera.com/users/login and register your Vera controller (your home router must be enabled for port forwarding).
 
-    Go to https://home.getvera.com/users/login and register your Vera controller (your home router must be enabled for port forwarding).
-    Pair your z-wave door contact sensor to your vera hub using the following link https://support.getvera.com/customer/en/portal/articles/2949040-how-to-pair-z-wave-devices?b_id=712 and connect the sensor terminals to a usb connector and plug it into port ttyUSB3 of your Pi device.
-    Follow the guide in the following link https://support.getvera.com/customer/portal/articles/2648086 to add your Alexa device of choice to the ecosystem.
-    Connect the two RFID readers to ports ttyUSB0 and ttyUSB1 on your Pi device.
-    Add the relay device to port ttyUSB2 on your Pi device and wire those relays accordingly to your pre-existing door automation system.
-    Turn on your Raspberry Pi device, download the Door Opener source code and save it into your home directory.
-    To initiate the Door Opener software one must run doormain.py and this can be done by opening a terminal windown on your Raspberry Pi and typing in the following commands:
+1. Pair your z-wave door contact sensor to your vera hub using the following link: https://support.getvera.com/customer/en/portal/articles/2949040-how-to-pair-z-wave-devices?b_id=712. Connect the sensor terminals to a usb connector and plug it into port ttyUSB3 of your Pi device.
 
+1. Add your Alexa device of choice to the ecosystem by following the guide in the link: https://support.getvera.com/customer/portal/articles/2648086.
+
+1. Connect the two RFID readers to ports ttyUSB0 and ttyUSB1 on your Pi device.
+
+1. Add the relay device to port ttyUSB2 on your Pi device and wire those relays accordingly to your pre-existing door automation system.
+
+1. Turn on your Raspberry Pi device then download the Door Opener source code and save it into your home directory.
+
+1. To initiate the Door Opener software one must run doormain.py and this can be done by opening a terminal windown on your Raspberry Pi and typing in the following commands:
+
+```
 cd /home/DoorOpener
 python doormain.py
+```
 
-These commands will run the code once, if you would like to run the code continuisly and not have to retype these commands after each reboot you can use the follwing commans instead:
+These commands will run the code once. If you would like to run the code continuously without having to retype these commands after each reboot, use the follwing commands instead:
 
+```
 cd /home/DoorOpener
 python doormain.py
+```
 
 followed by:
 
+```
 sudo reboot
+```
 
 to reboot the device.
 
 ## Usage
-The Door Opener software is self contained and complete and those not need additional code to work and can be used as is. In the case where the timining of relay triggers and open delays are not optimal for use or do not function as wanted, the CONFIG file can be edited in the following lines:
+The Door Opener software is self contained and complete, thus it doesn't require additional scripts or libraries to function. In the case where the timing of relay triggers and open delays are not optimal or do not function as desired, the following lines of the CONFIG file can be edited:
 
+```
 strikeRelay /dev/ttyUSB2 1 4    # relay 1, hold 4 sec
 doorRelay   /dev/ttyUSB2 2 4    # relay 1, hold 1 sec
 openDelay   1.5         # time delay for door to open
+```
 
 The hold time for each relay and the delay time can be changed for better performance.
 
-All valid RFID key tags are stored in the rfid.db file and it can be opened in any plane text editior to add or remove key tags.
+All valid RFID key tags are stored in the rfid.db file and it can be opened in any plain text editior to add or remove key tags.
 
 ## License
 This file is part of DoorOpener. DoorOpener is free software: you can
