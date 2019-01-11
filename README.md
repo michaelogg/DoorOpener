@@ -84,16 +84,31 @@ sudo reboot
 to reboot the device.
 
 ## Usage
-The Door Opener software is self contained and complete, thus it doesn't require additional scripts or libraries to function. In the case where the timing of relay triggers and open delays are not optimal or do not function as desired, the following lines of the CONFIG file can be edited:
+The Door Opener software is self contained and complete, thus it doesn't require additional scripts or libraries to function. Depending on your hardware configuration, you may need to adjust several parts of the CONFIG file. As well, you must include your own RFID tag keys in the rfid.db.
+
+   #### Device Port
+ 
+ Please consult Pi documentation online for specific port names. Change the /dev/ section of code (e.g. /dev/ttyUSB0) as required.
+
+  #### Relay triggers / door timings
+  
+
+In the case where the timing of relay triggers and open delays are not optimal or do not function as desired, the following lines of the CONFIG file can be edited:
 
 ```
 strikeRelay /dev/ttyUSB2 1 4    # relay 1, hold 4 sec
 doorRelay   /dev/ttyUSB2 2 4    # relay 1, hold 1 sec
 openDelay   1.5         # time delay for door to open
 ```
-
-The hold time for each relay and the delay time can be changed for better performance.
-
+  #### Vera address
+  
+ Please consult your Vera documentation for obtaining the URL of your device. 
+  
+  #### doorID
+ You'll have to access the Vera homepage via a browesr. Consult your Vera documentation to find the appropriate address / URL, and there will be a list of devices that can be connected or are already connected. The doorLock will be listed there with a number.
+ 
+ #### RFID tags
+  
 All valid RFID key tags are stored in the rfid.db file and it can be opened in any plain text editior to add or remove key tags.
 
 ## License
