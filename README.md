@@ -127,10 +127,12 @@ The intention of this section is to explain why the specific pieces of hardware 
 Please note that although some decisions would not make sense from the perspective of a pure electronic hobbyist, the intention of the project was to make it as easy as possible to set up. This resulted in the purchase of a few extra components (such as the relay box) to minimize soldering / wiring and maximize the amount of 'plug-and-play'. This also resulted in increase portability across platforms.
 
 * `Raspberry Pi 2` 
+
 A Pi 2 was used with a Wi-Fi dongle, although a Pi 3 was used with built in wi-fi compatability later by Dr. Ogg. Any Pi would do long as it has Wi-Fi or ethernet capabilities. It was used because of it's low-cost and minimal power usage.
 
 
 * `RFID Reader`
+
 A 125 KHz RFID reader was used. It had a solid range of 3 inches and a USB interface (via its FTDI connection) which was easily read out into an Linux TTY device.
 
 The following RFID system is composed of the following components:
@@ -140,6 +142,7 @@ Tags: https://www.sparkfun.com/products/retired/8310
 *The specific Ssparkfun tags are retired, but any 125 KHz tag will do. Ensure that the tags you purchase are of the correct frequency.*
 
 * `USB Relay Box`
+
 Although the Pi has GPIO pins that the Latch Strike and Door Operator relays could connect directly, as mentioned previously, the priority was ease of set-up and use. This Relay box which connects via USB to the Pi allows the user to control two devices from the Pi directly. Please note that you still need to wire the Latch Strike and Door Operator into the relay correctly.
 
 https://www.kmtronic.com/usb-relays.html?product_id=55
@@ -149,6 +152,7 @@ https://electronics.stackexchange.com/questions/30952/can-you-clarify-what-an-1n
 
 
 * `Latch Strike Relay`
+
 An electric latch strike was required to strike the latch of the door before the door can open. (Otherwise, the door operator would not be able to function as the door would get jammed on the latch.) The electric latch strike allows the door latch to be flush against the surface of the door before the door opens. 
 This is wired into the USB Relay Box.
 
@@ -156,6 +160,7 @@ Dr. ogg used a Securitron UNL-24.
 https://www.assaabloyesh.com/en/local/assaabloyeshcom/products/electric-strikes/securitron-unl/
 
 * `Door Operator Relay`
+
 The door operator is what physically opens the door once it is unlocked and the latch is flush with the door. The following operator was used:
 https://www.amazon.com/gp/product/B00QUORLVQ/ref=oh_aui_search_asin_title?ie=UTF8&psc=1
 
@@ -180,7 +185,7 @@ In order to see all Z-wave devices available (such as the door lock), please use
 http://< IP address of hub>:3480/data_request?id=sdata&output_format=json
 *<IP address of hub> must be replaced with the actual IP address of your Z-wave controller.
 
-* `Z-Wave Compatible Contact Closure`
+* `Z-Wave Compatible Contact Closure` 
 
 This Contact Closure, also referred to as a Z-wave relay, allows the user to close a circuit connection through Z-wave. This is not required, but it allows the door to be opened via a Z-wave App. It is wired in parallel with the pushplates to the Swifty USB.
 https://www.evolvecontrols.com/wp-content/uploads/2016/03/LFM-20.pdf
