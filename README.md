@@ -211,7 +211,9 @@ For powering this, it will function with either a 12 or 24 VDC supply composed o
 
 ## Images
 
-These are included within this Readme to give the reader an appreciation of what the final product looks like. Please note that
+These are included within this Readme to give the reader an appreciation of what the final product looks like. Please note that certain components, such as the Vera MiCasaVerde and the latch strike are not visible.
+
+
 ![hw1](https://user-images.githubusercontent.com/20260964/51931965-230f0c00-23cc-11e9-824b-e25a54e095f2.jpg)
 1) Door Operator
 2) 24V DC Power Supply
