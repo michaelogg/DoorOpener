@@ -7,6 +7,7 @@
 * [Installation](#Installation)
 * [Usage](#Usage)
 * [Hardware Choices](#Hardware-Choices)
+* [Images](#Images)
 * [License](#License)
 
 ## Abstract
@@ -43,11 +44,12 @@ The Pi itself is controlled through threaded python files, which means all the s
 * `Pushplates` x4 : In this project, four pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height both inside and outside the house.
 * `Swifty USB Contact Sensor` : a USB switch interface which detects contact closure. Can take a 3.5 mono jack input.
 
-More information on the components can be found under the [Hardware Choices](#Hardware-Choices) section.
+More information on the components can be found under the [Hardware Choices](#Hardware-Choices) section. Pictures of this set up have been included under [Images](#Images).
 
 
 ### Hardware Schematic
-![tetra - hw schematc -final v2](https://user-images.githubusercontent.com/20260964/51509250-5cd98480-1dc6-11e9-8bd3-5004610687bb.png)
+![tetra - hw schematc - final v2](https://user-images.githubusercontent.com/20260964/51933115-96198200-23ce-11e9-80db-69c8a9657aa1.png)
+
 
 * 'PP' refers to pushplate.
 * The black icon Z icon implies the devices is Z-wave controlled.
@@ -205,7 +207,27 @@ http://orin.com/access/swifty/
 
 * `Power`
 
-For powering this, it will function with either a 12 or 24 VDC supply composed of 12 V SLA batteries. In DoorOpener, this would be used to power the latch strike and, if you desire, the door operator and as the USB power supply for the Pi.
+For powering this, it will function with either a 12 or 24 VDC supply composed of 12 V SLA batteries. In DoorOpener, this would be used to power the latch strike and, if you desire, the door operator and as the USB power supply for the Pi.  There is also an Uniterrupted Power Supply used so that DoorOpener will function even if there is a power outage.
+
+## Images
+
+These are included within this Readme to give the reader an appreciation of what the final product looks like. Please note that
+![hw1](https://user-images.githubusercontent.com/20260964/51931965-230f0c00-23cc-11e9-824b-e25a54e095f2.jpg)
+1) Door Operator
+2) 24V DC Power Supply
+3) Uninterrupted Power Supply
+4) USB HUb
+5) USB Relay Box
+6) Raspberry Pi
+7) Door lock
+
+
+
+![hw2](https://user-images.githubusercontent.com/20260964/51931968-24403900-23cc-11e9-9770-ce22058e3d30.JPG)
+8) Upper and lower pushplates
+9) RFID reader
+
+This same setup is also on the outside of Dr. Ogg's house.
 
 
 ## License
