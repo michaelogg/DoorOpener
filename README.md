@@ -12,9 +12,9 @@
 
 ## Abstract
 
-DoorOpener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented and is being managed by the Ryerson Chapter of Tetra. DoorOpener is built for a user with limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, an Internet of Things (Z-wave) Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
+DoorOpener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented and is being managed by the Ryerson Chapter of Tetra. DoorOpener is built for a user with limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, an Z-wave Home Automation Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
 
-This project assumes you have a basic understanding of the following concepts: electrical work, Raspberry Pi , Z-wave controllers, and Python. The files are designed so that you can copy and paste this solution almost directly with only minor changes to the config file, given that the hardware is laid out in the same manner. 
+This project assumes you have a basic understanding of the following concepts: electrical work, Raspberry Pi, Z-wave controllers, and Python. The files are designed so that you can copy and paste this solution almost directly with only minor changes to the config file, given that the hardware is laid out in the same manner. 
 
 We hope that for whatever reason, whether it be as an electronic hobbyist or as someone working in accessibility services, you can make use of Dr. Ogg’s solution. If you’d like to see a video of the DoorOpener, please click here: https://www.youtube.com/watch?v=-B-Js19Npv0
 
@@ -22,27 +22,27 @@ We hope that for whatever reason, whether it be as an electronic hobbyist or as 
 ## Basic Methodology
 DoorOpener relies on two main controllers: the Raspberry Pi, which controls the majority of the project, and the Vera MiCasaVerde Z-wave controller, which controls the door lock and the Z-wave relay. 
 
-The RFID tag readers control if the door is locked or unlocked (based on commands sent from the Pi to the Vera). Since there is  a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
+The RFID tag readers control if the door is locked or unlocked (based on commands sent from the Pi to the Vera). Since there is a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
 
 The pushplates activate the door opening by activating the latch strike relay and then door operator relay through the Pi.The door closes automatically after a set period of time (declared in the CONFIG file). In addition to the pushplates, there is a Z-wave relay (commonly referred to as a "Compatabile Contact Closure") which can open the door through a Z-wave app (controlled by a device such as an iPhone or Android). The pushplates and the Z-wave relay are all wired in parallel to the Pi via a 3.5 mono jack and a Swifty USB.
 
 The Pi communicates with the Vera via URL commands (based on API given from Vera) sent via WiFi. This allows the Pi to control the door locker and is the middleman between the Z-wave relay and the Vera itself.
 
-The Pi itself is controlled through threaded python files, which means all the sensors are running at once.
+The Pi itself is controlled through threaded Python files, which means all the sensors are running at once.
 
 
 
 
 ## Main Components
-* `Raspberry Pi` : Main controller that connects to Vera and all other components via USB.
-* `RFID Reader` x2 : Device used to read RFID tags
-* `Latch Strike Relay` : Remote switch used to open or close the door latch. (Contained in relay box)
-* `Door Operator Relay` : Same device as the strike relay but used to turn the door lock on or off. (Contained in relay box). 
+* `Raspberry Pi` : Main controller that connects to the Vera MiCasaVerde and all other components.
+* `RFID Reader` x2 : Device used to read RFID tags.
+* `Latch Strike Relay` : Remote switch used to open or close the door latch. (Contained in relay box).
+* `Door Operator Relay` : Same device as the strike relay but used to turn the door operator on. (Contained in relay box). 
 *  `Z-wave Door Lock` : A Z-wave controlled lock which locks/unlocks based on the RFID readers.
-* `Vera MiCasaVerde` : Z-Wave hub that connects the contact closures and switches.
-* `Z-Wave Compatible Contact Closure` : a relay that allows the door to be opened and close via Z-wave.
+* `Vera MiCasaVerde` : Z-Wave hub that controlls the door lock.
+* `Z-Wave Compatible Contact Closure (Z-wave Relay)` : a relay that allows the door to be opened and close via Z-wave.
 * `Pushplates` x4 : In this project, four pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height both inside and outside the house.
-* `Swifty USB Contact Sensor` : a USB switch interface which detects contact closure. Can take a 3.5 mono jack input.
+* `Swifty USB Contact Sensor` : a USB switch interface which detects contact closure. Takes a 3.5 mono jack input.
 
 More information on the components can be found under the [Hardware Choices](#Hardware-Choices) section. Pictures of this set up have been included under [Images](#Images).
 
@@ -110,9 +110,10 @@ In the case where the timing of relay triggers and open delays are not optimal o
 
 ```
 strikeRelay /dev/ttyUSB2 1 4    # relay 1, hold 4 sec
-doorRelay   /dev/ttyUSB2 2 4    # relay 1, hold 1 sec
+doorRelay   /dev/ttyUSB2 2 4    # relay 2, hold 1 sec
 openDelay   1.5         # time delay for door to open
 ```
+
   #### Vera address
   
  Please consult your Vera documentation for obtaining the URL of your device. 
@@ -130,18 +131,18 @@ Please note that although some decisions would not make sense from the perspecti
 
 * `Raspberry Pi 2` 
 
-A Pi 2 was used with a Wi-Fi dongle, although a Pi 3 was used with built in wi-fi compatability later by Dr. Ogg. Any Pi would do long as it has Wi-Fi or ethernet capabilities. It was used because of it's low-cost and minimal power usage.
+A Pi 2 was used with a Wi-Fi dongle, although a Pi 3 was used with built in wi-fi compatability later by Dr. Ogg. Any Pi would do long as it has Wi-Fi or ethernet capabilities. It was used because of it's low-cost and minimal power usage, although in theory, any microprocessor / small computer could be used.
 
 
 * `RFID Reader`
 
-A 125 KHz RFID reader was used. It had a solid range of 3 inches and a USB interface (via its FTDI connection) which was easily read out into an Linux TTY device.
+A 125 KHz RFID reader was used. It had a solid range of 3 inches and a USB interface (via its FTDI connection) which was easily read out into an Linux TTY device. The specific RFID reader was used because it appears as a virtual COM (making it easy to interface with the Pi) and no driver installation was needed.
 
 The following RFID system is composed of the following components:
 Reader: https://www.sparkfun.com/products/9963
 Chip: https://www.sparkfun.com/products/11828 (this plugs into the above reader).
 Tags: https://www.sparkfun.com/products/retired/8310
-*The specific Ssparkfun tags are retired, but any 125 KHz tag will do. Ensure that the tags you purchase are of the correct frequency.*
+*The specific Sparkfun tags are retired, but any 125 KHz tag will do. Ensure that the tags you purchase are of the correct frequency.*
 
 * `USB Relay Box`
 
@@ -156,13 +157,14 @@ https://electronics.stackexchange.com/questions/30952/can-you-clarify-what-an-1n
 * `Latch Strike Relay`
 
 An electric latch strike was required to strike the latch of the door before the door can open. (Otherwise, the door operator would not be able to function as the door would get jammed on the latch.) The electric latch strike allows the door latch to be flush against the surface of the door before the door opens. 
-This is wired into the USB Relay Box.
+This is wired into the USB Relay Box. The relay activates the latch strike.
 
 Dr. ogg used a Securitron UNL-24.
 https://www.assaabloyesh.com/en/local/assaabloyeshcom/products/electric-strikes/securitron-unl/
 
 * `Door Operator Relay`
 
+The door operator relay sends a signal to the door operator to begin the opening process. This signal does not need to be sustained for the entire operation of the opening sequence.
 The door operator is what physically opens the door once it is unlocked and the latch is flush with the door. The following operator was used:
 https://www.amazon.com/gp/product/B00QUORLVQ/ref=oh_aui_search_asin_title?ie=UTF8&psc=1
 
@@ -198,6 +200,8 @@ http://homewave.intvelt.com/
 * `Pushplates` 
 
 These are the exact same type of pushplate you find in many buildings with the wheelchair accessibility symbol on them. They are wired in parallel via speaker cable through the walls and connect to the 3.5 mono jack (which, in turn, acts as the input for the Swift USB). When the pushplate is pressed it completes the circuit with the Swifty USB and sends a signal to the Pi.
+
+It is worth noting a contractor was needed to complete the wiring through the walls.
 
 * `Swifty USB Contact Sensor` 
 
