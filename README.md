@@ -12,7 +12,7 @@
 
 ## Abstract
 
-DoorOpener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented and is being managed by the Ryerson Chapter of Tetra. DoorOpener is built for a user with limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, a Z-wave Home Automation Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
+DoorOpener was designed by Dr. Michael Ogg with the intention of creating a hands-free method of entering or exiting one’s house. It was documented by the Ryerson Chapter of Tetra. DoorOpener is built for a user with limited or no limb mobility but has wheelchair access. It is based around the use of a Raspberry Pi, a Z-wave Home Automation Controller, RFID tags and pressure plates. The objective of having the code, as well as additional information, on Github is to allow users to copy and modify Dr. Ogg’s solution for their own purposes.
 
 This project assumes you have a basic understanding of the following concepts: electrical work, Raspberry Pi, Z-wave controllers, and Python. The files are designed so that you can copy and paste this solution almost directly with only minor changes to the config file, given that the hardware is laid out in the same manner. 
 
@@ -22,7 +22,7 @@ We hope that for whatever reason, whether it be as an electronic hobbyist or as 
 ## Basic Methodology
 DoorOpener relies on two main controllers: the Raspberry Pi, which controls the majority of the project, and the Vera MiCasaVerde Z-wave controller, which controls the door lock.
 
-The RFID tag readers control if the door is locked or unlocked (based on commands sent from the Pi to the Vera). Since there is a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
+The RFID tag readers control if the door is locked or unlocked (based on commands sent from the Pi to the Vera to the Z-wave door lock). Since there is a reader on both the inside and outside of the house, it is possible to change the state of the lock from either side of the door. 
 
 The pushplates activate the door opening by activating the latch strike relay and then door operator relay through the Pi. The door closes automatically after a set period of time (declared in the CONFIG file). In addition to the pushplates, there is a Z-wave relay (commonly referred to as a "Compatabile Contact Closure") which can open the door through a Z-wave app (controlled by a device such as an iPhone or Android). The pushplates and the Z-wave relay are all wired in parallel to the Pi via a 3.5 mono jack and a Swifty USB.
 
@@ -38,7 +38,7 @@ The Pi itself is controlled through threaded Python files, which means all the c
 * `RFID Reader` x2 : Device used to read RFID tags.
 * `Latch Strike Relay` : Relay used to open the door latch. (Contained in relay box).
 * `Door Operator Relay` : Similar to the strike relay. Used to signal the door operator to begin opening. (Contained in relay box). 
-*  `Z-wave Door Lock` : A Z-wave controlled lock which locks/unlocks based on the RFID readers.
+* `Z-wave Door Lock` : A Z-wave controlled lock which locks/unlocks based on the RFID readers.
 * `Vera MiCasaVerde` : Z-Wave hub that controls the door lock.
 * `Z-Wave Compatible Contact Closure (Z-wave Relay)` : a relay that allows the door to be opened and close via Z-wave.
 * `Pushplates` x4 : In this project, four pushplates are used as switches to actuate the door open relay. One is installed at an average height and the other is installed at foot level height both inside and outside the house.
@@ -253,7 +253,8 @@ These are included within this Readme to give the reader an appreciation of what
 
 
 ![hw2](https://user-images.githubusercontent.com/20260964/51931968-24403900-23cc-11e9-9770-ce22058e3d30.JPG)
-8) Upper and lower pushplates
+
+8) Upper and lower pushplates 
 9) RFID reader
 
 This same setup is also on the outside of Dr. Ogg's house.
