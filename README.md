@@ -56,45 +56,140 @@ More information on the components can be found under the [Hardware Choices](#Ha
 
 
 
-## Installation
+## Software Installation
 
-DoorOpener is designed to perform on any Pi with Wi-Fi compatibility or an ethernet port and the correct number of USB ports.
-It is also designed to be used with a Vera Z-wave controller, but ultimately, any Z-wave controller that can be controlled with HTTP commands can be used.
+### Introduction
+This assumes that the hardware has been installed and all of the electrical connections have been made. There are three logical components of the door opener. These are:
+1. The door opening mechanism and push plates including electric strike.
+2. The RFID tag reader, Z-wave door locks and Z-wave hub.
+3. The Z-wave relay for opening the door with a Z-wave app or an Amazon Echo device.
 
-Although the source code can be implemented on other devices with minor alterations, the following installation guide is intended for use with the aforementioned devices specifically.
+Depending on needs the only component that is strictly essential is (1). If this is the case, depending on the door opener hardware and the electric strike used, it may be possible to do it just by programming the door opener itself. However, computer control is much more flexible and much easier to adjust parameters such as delays for door opening and closing.
 
+Presumably most people will want to incorporate item (2) as well. This item could be used just as a method of access control although of course I designed the system to open my house door. This system uses the Vera Z-wave hub, https://getvera.com. There are several other Z-wave hubs on the market and in principle this can be used with any of them as long as there is a public HTTP interface.
 
-1. Go to https://home.getvera.com/users/login and register your Vera controller (your home router must be enabled for port forwarding).
+With items (1) and (2) in place, item (3) required no extra work and was just icing. It’s a good idea to have multiple redundancy anyway so it just adds to the system. Item (3) assumes that home automation using an Amazon Echo device is already in place. Details of integrating that with the Vera Z-wave hub are described in another GitHub project, https://github.com/bwssytems/ha-bridge
 
-1. Pair your z-wave door contact sensor to your vera hub using the following link: https://support.getvera.com/customer/en/portal/articles/2949040-how-to-pair-z-wave-devices?b_id=712. Connect the sensor terminals to a usb connector and plug it into port ttyUSB3 of your Pi device.
+### Installation
+1. Download and install the zip file in /home/pi on the Raspberry pi. If a different directory/username is used, the initialization shell script door.sh will need to be changed appropriately. This will create the directory DoorOpener containing all the necessary files. (Any other computer can be used, but YMMV.) Python is usually included with the default installation on the raspberry pi.
 
-1. Connect the two RFID readers to ports ttyUSB0 and ttyUSB1 on your Pi device.
-
-1. Add the relay device to port ttyUSB2 on your Pi device and wire those relays accordingly to your pre-existing door automation system.
-
-1. Turn on your Raspberry Pi device then download the Door Opener source code and save it into your home directory.
-
-1. To initiate the Door Opener software one must run doormain.py and this can be done by opening a terminal windown on your Raspberry Pi and typing in the following commands:
-
+  1a. [as soon as I switch over from using package wget to package requests, this step will no longer be necessary but for now… ]
+  ```
+  $ sudo pip install wget
 ```
-cd /home/DoorOpener
-python doormain.py
+2. Change directory to DoorOpener and look at the file CONFIG. It is likely that some of the parameters will need changing. Each line represents one parameter and the syntax of the line is:  parameter name followed by parameter values specific to that parameter separated by whitespace. Everything after a # is treated as a comment and the rest of the line is ignored. The file included in the distribution looks like:
 ```
+DEBUG		True			# debug flag, True/False
 
-These commands will run the code once. If you would like to run the code continuously without having to retype these commands after each reboot, use the follwing commands instead:
+rfidReader	/dev/ttyUSB0 /dev/ttyUSB1	# list of rfidReader devices
+strikeRelay	/dev/ttyUSB2 1 4	# relay 1, hold 4 sec
+doorRelay	/dev/ttyUSB2 2 1	# relay 2, hold 1 sec
+contactSensor	/dev/input/mouse0 9 0 0	# close [9,0,0], open [8,0,0]
+# contactSensor	/dev/hidraw0 1 0 0	# close [1,0,0], open [0,0,0]
+openDelay	1.5			# time delay for door to open
+rfidDB		rfid.db			# file of allowed RFID tags
 
+vera		http://192.168.1.13:3480	# IP:port of Vera hub
+doorId		16				# zwave ID of door lock
 ```
-cd /home/DoorOpener
-python doormain.py
-```
+The parameters that will almost certainly need changing are: 
+rfidReader, strikeRelay, doorRelay, contactSensor, vera and doorId.
 
-followed by:
-
+All of the USB devices will have a corresponding /dev entry. The easiest way to find them is to unplug all of the USB devices, and give the command:
 ```
-sudo reboot
+$ lsusb
 ```
+Then plug them back in one at a time, each time giving the same command to establish that the device was correctly recognized. When they are all plugged in, the output should look something like:
+```
+Bus 001 Device 009: ID 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART) IC
+Bus 001 Device 008: ID 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART) IC
+Bus 001 Device 007: ID 0403:6001 Future Technology Devices International, Ltd FT232 USB-Serial (UART) IC
+Bus 001 Device 006: ID 0a95:0010  
+Bus 001 Device 005: ID 058f:6254 Alcor Micro Corp. USB Hub
+Bus 001 Device 004: ID 0bda:8176 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
+Bus 001 Device 003: ID 0424:ec00 Standard Microsystems Corp. SMSC9512/9514 Fast Ethernet Adapter
+Bus 001 Device 002: ID 0424:9514 Standard Microsystems Corp. 
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+```
+Conveniently, both the RFID readers and the relays use the FTDI USB chip which makes the device appear as a TTY device. This is not only much easier to use than other USB devices but also makes it easy to identify. The following command will discover them:
+```
+$ ls /dev/ttyUSB*
+/dev/ttyUSB0
+/dev/ttyUSB1
+/dev/ttyUSB2
+```
+In this example, USB0 and USB1 are the two RFID readers and USB2 is the dual relay. Note that the dual relay used here has one USB connection and therefore one FTDI chip. Each of the two relays is identified by the second value of the relay parameter line in the CONFIG file.
+The USB device for the contact sensor from Origin Instruments is slightly more difficult to detect because the chip does not have any manufacturer identification when it identifies itself to the raspberry pi. Here it appears as device 006 on bus 001. The DIP switches on the device allow it to be configured as a mouse or keyboard and the documentation says that it is a standard HID device. Therefore we can look in /dev for these types of device.
+```
+$ ls /dev/input/mouse*
+/dev/input/mouse0
+```
+And for the HID,
+```
+$ ls /dev/hidraw*
+/dev/hidraw0
+```
+Plugging and unplugging the device will confirm that we have the right one. The open and close codes are specified in the CONFIG file. For a different device, they should be able to be found from the test program provided.
 
-to reboot the device.
+The openDelay parameter is the time delay between the strike relay closing and the open door relay closing since the door strike does not operate instantly. The value in the CONFIG file may be sufficient but depending on the hardware, it might need adjusting.
+
+The rfidDB parameter is the name of the file containing the authorized tags. If you wanted, you could make a log file of the door entries to keep track of everyone who entered. You could even make a log entry for all entry attempts to see who had tried to enter and was perhaps no longer authorized to do so.
+
+The vera parameter is the IP address and port number of the vera hub. The vera hub should be assigned a static IP address. A future release might obtain these values by discovery which the protocol allows.
+
+The doorId parameter is the Z-wave ID of the door lock assigned by the vera hub during the Z-wave pairing. It can be found by entering the URL http://hub_IP_address:port/data_request?id=sdata&output_format=json into a web browser. If the port is not known it is most likely 3480 which is the default port of the vera hub. This gives a dump of all the devices in the vera hub but the door lock should be readily identifiable by its name or type.
+
+3. There are some test programs to test basic operation and configuration.
+
+testoggle.py:  Test the configuration and the Z-wave operation of lock by toggling the lock state. Operation:  
+```
+$ ./testoggle.py
+```
+This test will change the state of the lock each time it is run. It only needs the Z-wave installation but not the door opener installation.
+
+
+testrelay.py:   Test the configuration and operation of the relays. Operation:  
+```
+$ ./testrelay.py
+```
+This test will work even if none of the installation is done but just with the raspberry pi and the USB relays. It can be used for incremental testing during installation, e.g. just with the door strike alone, the door operator alone and finally both together.
+
+testcontact.py:   Test the configuration and operation of the contact sensor. Operation:  
+```
+$ ./testcontact.py
+```
+This test will work even if none of the installation is done but just with the raspberry pi, the USB relays and the contact sensor connected. It can be used for incremental testing during installation, e.g. just with the door strike alone, the door operator alone and finally both together. If the Z-wave relay is used, now would be a good time to test it. Use an appropriate Z-wave app, e.g. HomeWave, http://homewave.intvelt.com/ and write a “momentary on“ macro for the relay with a one second pause between closing and opening. At this point, the rest of the installation can be completed including all the push plates connected in parallel with the Z-wave relay. The system can again be tested.
+
+
+doormain.py:   System testing and operation of the RFID readers as well as adding new tags to the RFID file. Operation:  
+```
+ $ ./python doormain.py
+```
+Set the DEBUG parameter to True in the CONFIG file, and hold an RFID tag 3” or less in front of a reader. The reader will beep if the tag was read successfully and the tag’s code will print out on the console. Add this code to the file specified by rfidDB then run the program again. This time the lock state should toggle and the door will open if any of the push plates is pressed or the Z-wave relay is closed using the Z-wave app.
+
+
+4. Installation can be finished so that the program is started and runs continuously after a reboot.
+
+Copy door.sh to /etc/init.d/
+```
+$ sudo cp door.sh /etc/init.d/
+```
+Ensure that it has the right permissions:
+```
+$ cd /etc/init.d/
+$ sudo chmod +x door.sh
+```
+Then create links in all the /etc/rc* directories:
+```
+$ sudo update-rc.d door.sh defaults
+```
+Reboot the raspberry pi and the door opener software should be running and ready to go.
+
+
+5. Using an Amazon Echo to open the door
+Having got this far, it’s easy to use the Amazon Echo to open the door. First, install the Vera-Phillips Hue bridge from GitHub project https://github.com/bwssytems/ha-bridge. The momentary on macro (or “scene”) should appear with the name “Open Sesame“ or whatever you called it. If not, open the GUI and manually add it as documented. Then say to your Amazon Echo: “Alexa discover devices“ and voilà, it’s all there! The only catch is that with this bridge, everything appears as a switch so you have to say something like: “Alexa Open Sesame on“ or perhaps “Alexa turn Open Sesame on.“
+
+
 
 ## Usage
 The DoorOpener software is self contained and complete, thus it doesn't require additional scripts or libraries to function. Depending on your hardware configuration, you may need to adjust several parts of the CONFIG file. As well, you must include your own RFID tag keys in the rfid.db. The following subsections explain the individual parts of the CONFIG file.
