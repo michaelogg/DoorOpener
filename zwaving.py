@@ -53,8 +53,8 @@ def wgetjson(url):
 # server	the vera server and port, e.g. http://192.168.1.13:3480
 class zwave:
         def __init__(self, server):
-                l = len(server)           # server variable is a URL from CONFIG
-                if server[l-1] != '/':    # append '/' char to end of URL if not already there
+                l = len(server)
+                if server[l-1] != '/':
                         server+='/'
                 print server
                 self.server = server
@@ -74,25 +74,3 @@ class zwave:
                                 i = REQUEST[d['category']]
                                 url += i['request']+str(id)+i['serviceId']+str(locked)
                                 wgetjson(url)	# change lock state
-
-# set lock's state
-# id the lock id
-# state The state to which lock should be set, 0=unlocked, 1=locked
-        def setLockState(self, id, state):
-                url = self.server
-                o = wgetjson(url+REQUEST[0])	# find all devices
-                for d in o['devices']:
-                        if id == d['id']:
-                                i = REQUEST[d['category']]
-                                url += i['request']+str(id)+i['serviceId']+str(state)
-                                wgetjson(url)	# change lock state
-
-# get lock's state
-# id the lock id
-        def getLockState(self, id):
-                url = self.server
-                o = wgetjson(url+REQUEST[0])	# find all devices
-                for d in o['devices']:
-                        if id == d['id']:
-                                locked = int(d['locked'])	# get lock state
-                                return locked

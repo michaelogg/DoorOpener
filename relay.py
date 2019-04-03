@@ -15,18 +15,19 @@ You should have received a copy of the GNU General Public License
 along with DoorOpener. If not, see <http://www.gnu.org/licenses/>.
 """
 
+import door
 import threading
 import time
 
 # encapsulate a relay
-# r is the relay, r[0] is the device e.g. /dev/ttyUSB0, r[1] is the relay number A: Found in config file. Used for the relay box.
+# r is the relay, r[0] is the device e.g. /dev/ttyUSB0, r[1] is the relay number
 # to write to the device, the program might have to be run with sudo
 
 class relay:
-    def __init__(self, r): #__init__ is a class constructor.
+    def __init__(self, r):
         print r
-        self.stream = open(r[0], "w", 0)        # r is the line in CONFIG starting with 'strikeRelay' or 'doorRelay' -> r[0] refers to device in CONFIG
-        self.buff = bytearray(3)    # byte array of size 3            
+        self.stream = open(r[0], "w", 0)
+        self.buff = bytearray(3)
         self.buff[0] = '\xff'		# first byte is wake up
         self.buff[1] = int(r[1])	# second byte is relay number
         self.hold = float(r[2])		# relay hold time
@@ -47,7 +48,7 @@ class relay:
 
 # class to do a momentary on. since the hold time is arbitrary, the action
 # has to be in its own thread.
-# relay	the relay AB: what does this mean?
+# relay	the relay
 
 class momentaryon(threading.Thread):
     def __init__(self, r):

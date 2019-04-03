@@ -23,14 +23,14 @@ import relay
 DEBUG = False
 
 def readConfig(file):
-    conf = {} #creates empty dictionary
+    conf = {}
     f = open(file)
     for line in f:
         e = line.find('#')
-        l = line[0:e].split() #seperates the config line, left hand being before #, right hand (gets removed) after and including #
+        l = line[0:e].split()
         if len(l) == 0:
-            continue #??? skips bplank lines
-        k = l.pop(0) #??? gets rid of the comment in each line
+            continue
+        k = l.pop(0)
         conf.update({k : l})
 
     global DEBUG

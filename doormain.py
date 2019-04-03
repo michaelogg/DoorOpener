@@ -33,10 +33,7 @@ conf = door.readConfig(CONFIG)
 print conf
 
 # then load the database of authorized RFID tags
-tagsDB = rfid.tagsDB(conf['rfidDB'][0])		# read the rfid.db (database) if CONFIG Debug mode is True, add first index of tag to database?
-
-
-
+tagsDB = rfid.tagsDB(conf['rfidDB'][0])
 
 # then instantiate the relays
 strikeRelay = relay.relay(conf['strikeRelay'])
@@ -44,13 +41,12 @@ doorRelay = relay.relay(conf['doorRelay'])
 
 # then the door lock
 doorLock = zwaving.zwave(conf['vera'][0])
-doorId = int(conf['doorId'][0])				# door ID is 16 in CONFIG (not sure why)
+doorId = int(conf['doorId'][0])
 
 # then start threads for each RFID reader
 for dev in conf['rfidReader']:
-    rfid.readRFID(dev, tagsDB, doorLock, doorId).start() #??? is .start() specifically for things that are being threaded?
-    rfid.readRFID(dev, tagsDB, doorLock, doorId).start() #??? is .start() specifically for things that are being threaded?
-											
+    rfid.readRFID(dev, tagsDB, doorLock, doorId).start()
+
 # instantiate object to perform open action
 delay = float(conf['openDelay'][0])
 action = door.opendoor(strikeRelay, doorRelay, delay)

@@ -24,17 +24,12 @@ import door
 # dbfile	name of file containing tags database
 
 class tagsDB:
-    def __init__(self, dbfile): 
-        self.f = open(dbfile)       # tag database
-        self.db = set()             # set([a,b,...]) gets rid of duplicates AB: order doesn't matter in  set()
-        for line in self.f:
-		if door.DEBUG: print line   # print line in tag db if DEBUG mode is True in CONFIG
-		l = line.split()            
-		if len(l) > 0:               # if at least one element in line
-	                self.db.add(l.pop(0))          #??? add first (pop(0)?) element of line to db
-									
+    def __init__(self, dbfile):
+        self.db = set(open(dbfile).read().split())
+        if door.DEBUG: print self.db
+
 # add a tag to the database
-    def updateDB(self, id):									#??? WHERE IS THIS USED
+    def updateDB(self, id):
 	l = id.split()
         if len(l) > 0:
 		tag = l.pop(0)[1:13]
@@ -47,9 +42,10 @@ class tagsDB:
 
 # check if tag is valid
     def isValid(self, tag):
+        tag = tag.strip()
         if len(tag) == 0:
             return False
-        return tag[1:13] in self.db
+        return tag[1:] in self.db
 
 # class to read RFID tags
 # dev		device name of RFID reader, e.g. /dev/ttyUSB0
@@ -58,7 +54,7 @@ class tagsDB:
 # doorId	ID of door lock
 class readRFID (threading.Thread):
     def __init__(self, dev, tagsDB, lock, doorId):
-        threading.Thread.__init__(self) #for running this in conjunction with other things in the pi
+        threading.Thread.__init__(self)
         self.dev = dev
         self.tagsDB = tagsDB
         self.lock = lock
